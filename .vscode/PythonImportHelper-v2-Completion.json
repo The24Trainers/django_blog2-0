@@ -16,11 +16,60 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
         "isExtraImport": true,
         "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "django.db.models.deletion",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "django.db.models.deletion",
+        "description": "django.db.models.deletion",
+        "detail": "django.db.models.deletion",
+        "documentation": {}
+    },
+    {
+        "label": "settings",
+        "importPath": "django.conf",
+        "description": "django.conf",
+        "isExtraImport": true,
+        "detail": "django.conf",
         "documentation": {}
     },
     {
@@ -147,12 +196,21 @@
         "documentation": {}
     },
     {
-        "label": "PostAdmin",
+        "label": "Migration",
         "kind": 6,
-        "importPath": "blog.admin",
-        "description": "blog.admin",
-        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'created_at')\n    search_fields = ('title',)\nadmin.site.register(Post, PostAdmin)\nclass CategoryAdmin(admin.ModelAdmin):\n    list_display = ('name',)\n    search_fields = ('name',)\nadmin.site.register(Category, CategoryAdmin)",
-        "detail": "blog.admin",
+        "importPath": "blog.migrations.0002_category_rename_update_at_post_updated_at_and_more",
+        "description": "blog.migrations.0002_category_rename_update_at_post_updated_at_and_more",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('blog', '0001_initial'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Category',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('name', models.CharField(max_length=100)),",
+        "detail": "blog.migrations.0002_category_rename_update_at_post_updated_at_and_more",
+        "documentation": {}
+    },
+    {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "blog.migrations.0003_alter_category_options_post_author_post_status",
+        "description": "blog.migrations.0003_alter_category_options_post_author_post_status",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('blog', '0002_category_rename_update_at_post_updated_at_and_more'),\n        migrations.swappable_dependency(settings.AUTH_USER_MODEL),\n    ]\n    operations = [\n        migrations.AlterModelOptions(\n            name='category',\n            options={'verbose_name_plural': 'Categories'},\n        ),",
+        "detail": "blog.migrations.0003_alter_category_options_post_author_post_status",
         "documentation": {}
     },
     {
@@ -160,7 +218,16 @@
         "kind": 6,
         "importPath": "blog.admin",
         "description": "blog.admin",
-        "peekOfCode": "class CategoryAdmin(admin.ModelAdmin):\n    list_display = ('name',)\n    search_fields = ('name',)\nadmin.site.register(Category, CategoryAdmin)",
+        "peekOfCode": "class CategoryAdmin(admin.ModelAdmin):\n    list_display = ('name',)\n    search_fields = ('name',)\nadmin.site.register(Category, CategoryAdmin)\nclass PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'category', 'created_at', 'updated_at')\n    search_fields = ('title', 'content')\nadmin.site.register(Post, PostAdmin)",
+        "detail": "blog.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PostAdmin",
+        "kind": 6,
+        "importPath": "blog.admin",
+        "description": "blog.admin",
+        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'category', 'created_at', 'updated_at')\n    search_fields = ('title', 'content')\nadmin.site.register(Post, PostAdmin)",
         "detail": "blog.admin",
         "documentation": {}
     },
@@ -178,7 +245,7 @@
         "kind": 6,
         "importPath": "blog.models",
         "description": "blog.models",
-        "peekOfCode": "class Category(models.Model):\n    name = models.CharField(max_length=100)\n    def __str__(self):\n        return self.name\nstatus = (\n    ('draft', 'Draft'),\n    ('published', 'Published'),\n)\nclass Post(models.Model):\n    title = models.CharField(max_length=300)",
+        "peekOfCode": "class Category(models.Model):\n    name = models.CharField(max_length=100)\n    def __str__(self):\n        return self.name\n    class Meta:\n        verbose_name_plural = 'Categories'\nstatus_choices = (\n    ('draft', 'Draft'),\n    ('published', 'Published'),\n)",
         "detail": "blog.models",
         "documentation": {}
     },
@@ -187,16 +254,16 @@
         "kind": 6,
         "importPath": "blog.models",
         "description": "blog.models",
-        "peekOfCode": "class Post(models.Model):\n    title = models.CharField(max_length=300)\n    content = models.TextField()\n    status = models.CharField(max_length=10, choices=status, default='draft')\n    category = models.ForeignKey(Category, on_delete=models.CASCADE)\n    thumbnail = models.ImageField(upload_to='uploads/')\n    created_at = models.DateTimeField(auto_now_add=True)\n    update_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return self.title",
+        "peekOfCode": "class Post(models.Model):\n    title = models.CharField(max_length=300)\n    short_description = models.CharField(max_length=500, null=True, blank=True)\n    content = models.TextField()\n    featured_image = models.ImageField(upload_to='uploads/', null=True, blank=True)\n    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)\n    status = models.CharField(max_length=100, choices=status_choices, default='draft')\n    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)\n    is_feated = models.BooleanField(default=False)\n    created_at = models.DateTimeField(auto_now_add=True)",
         "detail": "blog.models",
         "documentation": {}
     },
     {
-        "label": "status",
+        "label": "status_choices",
         "kind": 5,
         "importPath": "blog.models",
         "description": "blog.models",
-        "peekOfCode": "status = (\n    ('draft', 'Draft'),\n    ('published', 'Published'),\n)\nclass Post(models.Model):\n    title = models.CharField(max_length=300)\n    content = models.TextField()\n    status = models.CharField(max_length=10, choices=status, default='draft')\n    category = models.ForeignKey(Category, on_delete=models.CASCADE)\n    thumbnail = models.ImageField(upload_to='uploads/')",
+        "peekOfCode": "status_choices = (\n    ('draft', 'Draft'),\n    ('published', 'Published'),\n)\nclass Post(models.Model):\n    title = models.CharField(max_length=300)\n    short_description = models.CharField(max_length=500, null=True, blank=True)\n    content = models.TextField()\n    featured_image = models.ImageField(upload_to='uploads/', null=True, blank=True)\n    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)",
         "detail": "blog.models",
         "documentation": {}
     },

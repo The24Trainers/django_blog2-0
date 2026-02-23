@@ -2,14 +2,17 @@ from django.db import models
 
 # Create your models here.
 
-
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
-status = (
+    class Meta:
+        verbose_name_plural = 'Categories'
+
+
+status_choices = (
     ('draft', 'Draft'),
     ('published', 'Published'),
 )
@@ -17,13 +20,15 @@ status = (
 
 class Post(models.Model):
     title = models.CharField(max_length=300)
+    short_description = models.CharField(max_length=500, null=True, blank=True)
     content = models.TextField()
-    status = models.CharField(max_length=10, choices=status, default='draft')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    thumbnail = models.ImageField(upload_to='uploads/')
+    featured_image = models.ImageField(upload_to='uploads/', null=True, blank=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
+    status = models.CharField(max_length=100, choices=status_choices, default='draft')
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)
+    is_feated = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    update_at = models.DateTimeField(auto_now=True)
-
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title
