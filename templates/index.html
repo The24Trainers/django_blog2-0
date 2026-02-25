@@ -34,22 +34,11 @@
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li><a href="./index.html">Home</a></li>
-                <li><a href="#">Recipes</a></li>
-                <li><a href="#">Dinner</a></li>
-                <li><a href="#">Desserts</a></li>
-                <li class="dropdown"><a href="#">Pages</a>
-                    <ul class="dropdown__menu">
-                        <li><a href="./categories-grid.html">Categories Grid</a></li>
-                        <li><a href="./categories-list.html">Categories List</a></li>
-                        <li><a href="./single-post.html">Single Post</a></li>
-                        <li><a href="./signin.html">Sign In</a></li>
-                        <li><a href="./404.html">404</a></li>
-                        <li><a href="./typography.html">Typography</a></li>
-                    </ul>
-                </li>
-                <li><a href="./about.html">About</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                
+                {% for cate in category  %}
+                    <li><a href="#">{{ cate.name }}</a></li>
+                {% endfor %}
+                
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -97,8 +86,12 @@
                     <div class="col-lg-8 col-md-10 order-md-2 order-3">
                         <nav class="header__menu">
                             <ul>
-                                <li class="active"><a href="./index.html">Home</a></li>
-                                <li><a href="#">Recipes</a>
+                                
+                                {% for cate in category  %}
+                                     <li class="active"><a href="./index.html">{{ cate.name }}</a></li>
+                                {% endfor %}
+                                    
+                                {% comment %} <li><a href="#">Recipes</a>
                                     <div class="header__megamenu__wrapper">
                                         <div class="header__megamenu">
                                             <div class="header__megamenu__item">
@@ -167,7 +160,7 @@
                                     </ul>
                                 </li>
                                 <li><a href="./about.html">About</a></li>
-                                <li><a href="./contact.html">Contact</a></li>
+                                <li><a href="./contact.html">Contact</a></li> {% endcomment %}
                             </ul>
                         </nav>
                     </div>
@@ -209,20 +202,23 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-lg-6 p-0">
+                            
+                            {% for fbp in featured_blog_post  %}
+
                             <div class="hero__inside__item hero__inside__item--wide set-bg"
-                                data-setbg="{% static 'img/hero/hero-1.jpg' %}">
+                                data-setbg="{{ fbp.featured_image.url }}">
                                 <div class="hero__inside__item__text">
                                     <div class="hero__inside__item--meta">
-                                        <span>08</span>
-                                        <p>Aug</p>
+                                        
+                                        <span> {{ fbp.created_at|date:"d" }} </span>
+                                        <p>{{ fbp.created_at|date:"M" }}</p>
                                     </div>
                                     <div class="hero__inside__item--text">
                                         <ul class="label">
                                             <li>Vegan</li>
                                             <li>Desserts</li>
                                         </ul>
-                                        <h4>Vegan White Peach Mug Cobbler With CardamomVegan<br /> White Peach Mug
-                                            Cobbler With Cardamom</h4>
+                                        <h4> {{ fbp.title }} </h4>
                                         <ul class="widget">
                                             <li>by <span>Admin</span></li>
                                             <li>3 min read</li>
@@ -231,6 +227,9 @@
                                     </div>
                                 </div>
                             </div>
+                                
+                            {% endfor %}
+                                
                         </div>
                         <div class="col-lg-3 col-md-6  p-0">
                             <div class="hero__inside__item hero__inside__item--small set-bg"
