@@ -80,6 +80,22 @@
         "documentation": {}
     },
     {
+        "label": "migrations",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
+        "label": "models",
+        "importPath": "django.db",
+        "description": "django.db",
+        "isExtraImport": true,
+        "detail": "django.db",
+        "documentation": {}
+    },
+    {
         "label": "models",
         "importPath": "django.db",
         "description": "django.db",
@@ -145,6 +161,14 @@
         "documentation": {}
     },
     {
+        "label": "Promotion",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
         "label": "Category",
         "importPath": "blog.models",
         "description": "blog.models",
@@ -154,6 +178,14 @@
     },
     {
         "label": "Post",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
+        "label": "Promotion",
         "importPath": "blog.models",
         "description": "blog.models",
         "isExtraImport": true,
@@ -296,6 +328,15 @@
         "documentation": {}
     },
     {
+        "label": "Migration",
+        "kind": 6,
+        "importPath": "blog.migrations.0006_promotion",
+        "description": "blog.migrations.0006_promotion",
+        "peekOfCode": "class Migration(migrations.Migration):\n    dependencies = [\n        ('blog', '0005_post_slug'),\n    ]\n    operations = [\n        migrations.CreateModel(\n            name='Promotion',\n            fields=[\n                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),\n                ('title', models.CharField(max_length=300)),",
+        "detail": "blog.migrations.0006_promotion",
+        "documentation": {}
+    },
+    {
         "label": "CategoryAdmin",
         "kind": 6,
         "importPath": "blog.admin",
@@ -309,7 +350,16 @@
         "kind": 6,
         "importPath": "blog.admin",
         "description": "blog.admin",
-        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'category', 'created_at', 'updated_at')\n    search_fields = ('title', 'content')\n    prepopulated_fields = {'slug' : ('title',)}\nadmin.site.register(Post, PostAdmin)",
+        "peekOfCode": "class PostAdmin(admin.ModelAdmin):\n    list_display = ('title', 'category', 'created_at', 'updated_at')\n    search_fields = ('title', 'content')\n    prepopulated_fields = {'slug' : ('title',)}\nadmin.site.register(Post, PostAdmin)\nclass PromotionAdmin(admin.ModelAdmin):\n    list_display = ('title',)\nadmin.site.register(Promotion, PromotionAdmin)",
+        "detail": "blog.admin",
+        "documentation": {}
+    },
+    {
+        "label": "PromotionAdmin",
+        "kind": 6,
+        "importPath": "blog.admin",
+        "description": "blog.admin",
+        "peekOfCode": "class PromotionAdmin(admin.ModelAdmin):\n    list_display = ('title',)\nadmin.site.register(Promotion, PromotionAdmin)",
         "detail": "blog.admin",
         "documentation": {}
     },
@@ -337,6 +387,15 @@
         "importPath": "blog.models",
         "description": "blog.models",
         "peekOfCode": "class Post(models.Model):\n    title = models.CharField(max_length=300)\n    short_description = models.CharField(max_length=500, null=True, blank=True)\n    slug = models.SlugField(max_length=300, unique=True , null=True, blank=True)\n    content = models.TextField()\n    featured_image = models.ImageField(upload_to='uploads/', null=True, blank=True)\n    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)\n    status = models.CharField(max_length=100, choices=status_choices, default='draft')\n    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, null=True, blank=True)\n    is_feated = models.BooleanField(default=False)",
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
+        "label": "Promotion",
+        "kind": 6,
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "peekOfCode": "class Promotion(models.Model):\n    title = models.CharField(max_length=300)\n    image = models.ImageField(upload_to='uploads/', null=True, blank=True)\n    created_at = models.DateTimeField(auto_now_add=True)\n    updated_at = models.DateTimeField(auto_now=True)\n    def __str__(self):\n        return self.title",
         "detail": "blog.models",
         "documentation": {}
     },
@@ -552,7 +611,7 @@
         "kind": 2,
         "importPath": "core.views",
         "description": "core.views",
-        "peekOfCode": "def home(request):\n    category = Category.objects.all()\n    featured_blog_post = Post.objects.filter(is_feated=True)\n    context = {\n        'category': category,\n        'featured_blog_post' : featured_blog_post\n    }\n    return render(request, 'index.html', context)",
+        "peekOfCode": "def home(request):\n    category = Category.objects.all()\n    featured_blog_post = Post.objects.filter(is_feated=True)\n    promotionData = Promotion.objects.all()\n    context = {\n        'category': category,\n        'featured_blog_post' : featured_blog_post,\n        'promotionData': promotionData\n    }\n    return render(request, 'index.html', context)",
         "detail": "core.views",
         "documentation": {}
     },

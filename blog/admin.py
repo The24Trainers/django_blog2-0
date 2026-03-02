@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from blog.models import Category, Post
+from blog.models import Category, Post, Promotion
 
 
 class CategoryAdmin(admin.ModelAdmin):
@@ -16,4 +16,10 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug' : ('title',)}
 
 admin.site.register(Post, PostAdmin)
+
+
+class PromotionAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+
+admin.site.register(Promotion, PromotionAdmin)
 

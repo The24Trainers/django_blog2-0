@@ -1444,6 +1444,12 @@ ol {
 	margin-bottom: 30px;
 }
 
+.promotion_inner img {
+    height: 190px;
+    width: 100%;
+	object-fit: cover;
+}
+
 .sidebar__item__title h6,
 .humberger__menu__title h6 {
 	display: inline-block;
