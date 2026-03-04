@@ -177,6 +177,14 @@
         "documentation": {}
     },
     {
+        "label": "Category",
+        "importPath": "blog.models",
+        "description": "blog.models",
+        "isExtraImport": true,
+        "detail": "blog.models",
+        "documentation": {}
+    },
+    {
         "label": "Post",
         "importPath": "blog.models",
         "description": "blog.models",
@@ -206,6 +214,54 @@
         "description": "django.test",
         "isExtraImport": true,
         "detail": "django.test",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "include",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "path",
+        "importPath": "django.urls",
+        "description": "django.urls",
+        "isExtraImport": true,
+        "detail": "django.urls",
+        "documentation": {}
+    },
+    {
+        "label": "views",
+        "importPath": "blog",
+        "description": "blog",
+        "isExtraImport": true,
+        "detail": "blog",
+        "documentation": {}
+    },
+    {
+        "label": "HttpResponse",
+        "importPath": "django.http",
+        "description": "django.http",
+        "isExtraImport": true,
+        "detail": "django.http",
         "documentation": {}
     },
     {
@@ -255,14 +311,6 @@
         "description": "django.conf.urls.static",
         "isExtraImport": true,
         "detail": "django.conf.urls.static",
-        "documentation": {}
-    },
-    {
-        "label": "path",
-        "importPath": "django.urls",
-        "description": "django.urls",
-        "isExtraImport": true,
-        "detail": "django.urls",
         "documentation": {}
     },
     {
@@ -406,6 +454,24 @@
         "description": "blog.models",
         "peekOfCode": "status_choices = (\n    ('draft', 'Draft'),\n    ('published', 'Published'),\n)\nclass Post(models.Model):\n    title = models.CharField(max_length=300)\n    short_description = models.CharField(max_length=500, null=True, blank=True)\n    slug = models.SlugField(max_length=300, unique=True , null=True, blank=True)\n    content = models.TextField()\n    featured_image = models.ImageField(upload_to='uploads/', null=True, blank=True)",
         "detail": "blog.models",
+        "documentation": {}
+    },
+    {
+        "label": "urlpatterns",
+        "kind": 5,
+        "importPath": "blog.urls",
+        "description": "blog.urls",
+        "peekOfCode": "urlpatterns = [\n    path('<int:category_id>/', views.category_list, name='category_list'),\n]",
+        "detail": "blog.urls",
+        "documentation": {}
+    },
+    {
+        "label": "category_list",
+        "kind": 2,
+        "importPath": "blog.views",
+        "description": "blog.views",
+        "peekOfCode": "def category_list(request, category_id):\n    get_category_id = Category.objects.get( id=category_id) \n    context = {\n        'name': get_category_id\n    }\n    return render(request, 'pages/single_category.html', context)",
+        "detail": "blog.views",
         "documentation": {}
     },
     {
@@ -602,7 +668,7 @@
         "kind": 5,
         "importPath": "core.urls",
         "description": "core.urls",
-        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('', views.home, name='home'),\n] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
+        "peekOfCode": "urlpatterns = [\n    path('admin/', admin.site.urls),\n    path('', views.home, name='home'),\n    path('category/', include('blog.urls')),\n] + static (settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)",
         "detail": "core.urls",
         "documentation": {}
     },
